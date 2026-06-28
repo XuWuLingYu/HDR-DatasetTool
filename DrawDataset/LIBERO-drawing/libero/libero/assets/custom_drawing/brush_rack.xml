@@ -1,0 +1,20 @@
+<mujoco model="brush_rack">
+  <asset>
+    <material name="rack_mat" rgba="0.72 0.74 0.76 1" reflectance="0.2" specular="0.3" shininess="0.2"/>
+  </asset>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom name="base" type="box" pos="0 0 0.012" size="0.075 0.045 0.012" density="600" friction="1.0 0.2 0.05" group="1" material="rack_mat"/>
+        <geom name="post_left" type="cylinder" pos="-0.045 0 0.085" size="0.006 0.075" density="600" group="1" material="rack_mat" contype="0" conaffinity="0"/>
+        <geom name="post_right" type="cylinder" pos="0.045 0 0.085" size="0.006 0.075" density="600" group="1" material="rack_mat" contype="0" conaffinity="0"/>
+        <geom name="top_bar" type="box" pos="0 0 0.158" size="0.065 0.01 0.006" density="600" group="1" material="rack_mat" contype="0" conaffinity="0"/>
+        <geom name="front_guard" type="box" pos="0 -0.024 0.08" size="0.06 0.004 0.058" density="600" group="1" material="rack_mat" contype="0" conaffinity="0"/>
+        <geom name="back_guard" type="box" pos="0 0.024 0.08" size="0.06 0.004 0.058" density="600" group="1" material="rack_mat" contype="0" conaffinity="0"/>
+      </body>
+      <site name="bottom_site" rgba="0 0 0 0" size="0.005" pos="0 0 -0.04"/>
+      <site name="top_site" rgba="0 0 0 0" size="0.005" pos="0 0 0.17"/>
+      <site name="horizontal_radius_site" rgba="0 0 0 0" size="0.005" pos="0.08 0 0.02"/>
+    </body>
+  </worldbody>
+</mujoco>

@@ -1,0 +1,89 @@
+dataset:
+  episodes: 16
+  fps: 20
+  seed: 0
+  save_frames: false
+
+output:
+  video_only: true
+  shard_size: 1000
+  write_manifest: false
+
+video:
+  width: 512
+  height: 512
+  target_frames:
+  warmup_frames: 0
+  hold_final_frames: 0
+  codec: libx264
+  bit_rate: 2000000
+  background_rgb: [232, 235, 238]
+
+reference:
+  enabled: true
+
+boards:
+  board_rgb: [252, 252, 248]
+  line_rgb: [18, 18, 18]
+  target_rect: [28, 132, 236, 340]
+  draw_rect: [276, 132, 484, 340]
+  stroke_width: 4
+  margin: 0.08
+
+prompt:
+  enabled: false
+  fixed: "用机器人复制左边的图案"
+  template: "用机器人复制左边的图案"
+
+status_light:
+  enabled: true
+  mode: end_effector
+  radius_px: 8
+  pen_down_rgb: [255, 0, 0]
+  pen_up_rgb: [0, 255, 0]
+
+sketch:
+  generator: ornamental_oneline
+  min_points: 90
+  max_points: 180
+  margin: 0.1
+  jitter: 0.004
+  families:
+    shape_chain: 0.13
+    nested_shapes: 0.11
+    grid_walk: 0.10
+    smooth_walk: 0.10
+    calligraphy: 0.10
+    icon_outline: 0.12
+    zigzag_fold: 0.08
+    lissajous: 0.08
+    spiro: 0.07
+    ribbon: 0.06
+    mandala: 0.03
+    wave: 0.02
+
+planner:
+  frames_per_unit: 42
+  min_segment_frames: 3
+  lift_frames: 5
+  return_home: true
+  home_xy: [0.5, 0.0]
+  return_frames_per_unit: 42
+  pen_contact_noise: 0.0005
+  tracking_noise: 0.001
+
+robot:
+  visual: screen_normal_ee
+  base_xy: [0.52, 0.52]
+  link_lengths: [0.34, 0.27, 0.18]
+  joint_limits:
+    - [-2.8, 2.8]
+    - [-2.7, 2.7]
+    - [-2.6, 2.6]
+  elbow_up: true
+  pen_length: 0.055
+  visual_occlusion:
+    rod_width_px: 22
+    rod_height_px: 160
+    joint_radius_px: 22
+    inner_radius_px: 16

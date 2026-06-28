@@ -1,0 +1,64 @@
+(define (problem LIBERO_Drawing_Copy)
+  (:domain robosuite)
+  (:language Pick up the vertical soft brush from the right flat board and copy the one-stroke pattern from the left flat board onto the blank right flat board)
+    (:regions
+      (reference_board_region
+          (:target main_table)
+          (:ranges (
+              (-0.061 -0.24 -0.059 -0.20)
+            )
+          )
+      )
+      (blank_board_region
+          (:target main_table)
+          (:ranges (
+              (-0.061 0.08 -0.059 0.12)
+            )
+          )
+      )
+      (brush_region
+          (:target main_table)
+          (:ranges (
+              (-0.18 0.28 -0.14 0.32)
+            )
+          )
+      )
+      (bucket_region
+          (:target main_table)
+          (:ranges (
+              (0.018 0.30 0.028 0.34)
+            )
+          )
+      )
+    )
+
+  (:fixtures
+    main_table - table
+    drawing_board_reference_1 - drawing_board_reference
+    drawing_board_blank_1 - drawing_board_blank
+    drawing_water_bucket_1 - drawing_water_bucket
+  )
+
+  (:objects
+    soft_brush_1 - soft_brush
+  )
+
+  (:obj_of_interest
+    drawing_board_reference_1
+    drawing_board_blank_1
+    drawing_water_bucket_1
+    soft_brush_1
+  )
+
+  (:init
+    (On drawing_board_reference_1 main_table_reference_board_region)
+    (On drawing_board_blank_1 main_table_blank_board_region)
+    (On drawing_water_bucket_1 main_table_bucket_region)
+    (On soft_brush_1 main_table_brush_region)
+  )
+
+  (:goal
+    (And (On soft_brush_1 drawing_board_blank_1))
+  )
+
+)
