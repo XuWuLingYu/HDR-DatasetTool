@@ -1,0 +1,1078 @@
+global:
+  default_output_root: data
+
+environments:
+  one_line_drawing:
+    output_root: data
+    seed: 7
+    generation:
+      workers: 6
+    render:
+      resolution: [208, 208]
+      fps: 10
+      duration_seconds:
+        min: 3
+        max: 7
+      frames_per_edge: 5
+      hold_frames: 2
+      style:
+        board_margin: 16
+        tile_radius: 8
+        node_radius: 14
+        node_radius_ratio: 0.24
+    levels:
+      "2":
+        board_size: [9, 9]
+        cell_count_range: [5, 12]
+        max_shape_span: 7
+        min_turns: 2
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.5
+        max_attempts: 1600
+        uniqueness_attempts: 2200
+        generator:
+          train_families: ["straight_walk", "turning_walk", "snake_walk", "zigzag_walk"]
+          eval_ood_families: ["perimeter_walk", "turn_back_walk"]
+      "3":
+        board_size: [10, 10]
+        cell_count_range: [9, 16]
+        max_shape_span: 8
+        min_turns: 4
+        min_side_contacts: 2
+        min_fill_ratio: 0.45
+        max_straight_run: 5
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.5
+        max_attempts: 1600
+        uniqueness_attempts: 2200
+        generator:
+          train_families: ["turning_walk", "snake_walk", "zigzag_walk", "perimeter_walk"]
+          eval_ood_families: ["perimeter_walk", "turn_back_walk"]
+      "4":
+        board_size: [12, 12]
+        cell_count_range: [13, 22]
+        max_shape_span: 9
+        min_turns: 6
+        min_side_contacts: 4
+        min_fill_ratio: 0.5
+        max_straight_run: 5
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.5
+        max_attempts: 2000
+        uniqueness_attempts: 2600
+        generator:
+          train_families: ["turning_walk", "snake_walk", "zigzag_walk", "perimeter_walk", "turn_back_walk"]
+          eval_ood_families: ["perimeter_walk", "turn_back_walk"]
+  water_pour:
+    output_root: data
+    seed: 19
+    generation:
+      workers: 4
+    solver:
+      max_nodes: 500000
+    render:
+      resolution: [208, 208]
+      fps: 10
+      frames_per_lift: 3
+      frames_per_horizontal: 4
+      frames_per_drop: 3
+      hold_frames: 2
+      palettes:
+        - ["#f7838f", "#6495f7", "#6fd2aa", "#f3c768", "#be8cff", "#ff915d", "#61d8f4", "#f7f08a"]
+        - ["#ef7b45", "#4f86c6", "#6fb98f", "#f1d302", "#7d5ba6", "#ee6352", "#59c3c3", "#f7a072"]
+        - ["#ff7a8a", "#72a1ff", "#84d9b2", "#ffd166", "#b799ff", "#ff9f68", "#6ad0ff", "#f4ef88"]
+      style:
+        background: "#0f1220"
+        tube_outer: "#646974"
+        tube_inner: "#242834"
+        shadow: "#0d1018"
+        margin_x: 14
+        margin_y: 28
+        tube_width: 34
+        tube_height: 126
+        tube_height_two_row: 68
+        tube_gap_x: 14
+        tube_gap_y: 22
+        two_row_carry_reserve: 28
+        tube_wall: 4
+        tube_radius: 10
+        tube_inner_padding: 8
+        block_gap: 6
+        block_side_margin: 7
+        carry_clearance: 14
+        carry_corridor_clearance: 18
+        carry_top_margin: 6
+        frames_per_rise: 2
+        frames_per_pre_drop: 2
+    levels:
+      "2":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l2_t3_c3_colors2
+            topology_split: id
+            tube_count: 3
+            capacity: 3
+            color_count: 2
+            quota: 10
+            solution_len_range: [2, 4]
+            max_start_moves: 6
+            max_branch_avg_times_ten: 35
+            max_sorted_tubes: 1
+            min_state_distance: 3
+          - name: l2_t4_c3_colors3
+            topology_split: id
+            tube_count: 4
+            capacity: 3
+            color_count: 3
+            quota: 100
+            solution_len_range: [3, 5]
+            max_start_moves: 8
+            max_branch_avg_times_ten: 40
+            max_sorted_tubes: 1
+            min_state_distance: 3
+          - name: l2_t5_c3_colors3
+            topology_split: id
+            tube_count: 5
+            capacity: 3
+            color_count: 3
+            quota: 140
+            solution_len_range: [3, 6]
+            max_start_moves: 9
+            max_branch_avg_times_ten: 60
+            max_sorted_tubes: 1
+            min_state_distance: 3
+            max_retries: 800
+          - name: l2_t6_c3_colors3
+            topology_split: id
+            tube_count: 6
+            capacity: 3
+            color_count: 3
+            quota: 250
+            solution_len_range: [4, 7]
+            max_start_moves: 12
+            max_branch_avg_times_ten: 100
+            max_sorted_tubes: 1
+            min_state_distance: 4
+            max_retries: 800
+          - name: l2_t6_c3_colors4
+            topology_split: id
+            tube_count: 6
+            capacity: 3
+            color_count: 4
+            quota: 500
+            solution_len_range: [5, 8]
+            max_start_moves: 11
+            max_branch_avg_times_ten: 65
+            max_sorted_tubes: 1
+            min_state_distance: 4
+            max_retries: 1200
+        eval_id_buckets:
+          - name: l2_eval_id_t4
+            topology_split: id
+            tube_count: 4
+            capacity: 3
+            color_count: 3
+            quota: 1
+            solution_len_range: [3, 5]
+            max_start_moves: 8
+            max_branch_avg_times_ten: 40
+            max_sorted_tubes: 1
+            min_state_distance: 3
+          - name: l2_eval_id_t5
+            topology_split: id
+            tube_count: 5
+            capacity: 3
+            color_count: 3
+            quota: 1
+            solution_len_range: [3, 6]
+            max_start_moves: 9
+            max_branch_avg_times_ten: 45
+            max_sorted_tubes: 1
+            min_state_distance: 3
+          - name: l2_eval_id_t6
+            topology_split: id
+            tube_count: 6
+            capacity: 3
+            color_count: 4
+            quota: 2
+            solution_len_range: [5, 8]
+            max_start_moves: 11
+            max_branch_avg_times_ten: 50
+            max_sorted_tubes: 1
+            min_state_distance: 4
+        eval_ood_buckets:
+          - name: l2_eval_ood_t6_c4
+            topology_split: ood
+            tube_count: 6
+            capacity: 4
+            color_count: 4
+            quota: 1
+            solution_len_range: [6, 9]
+            max_start_moves: 10
+            max_branch_avg_times_ten: 45
+            max_sorted_tubes: 1
+            min_state_distance: 4
+      "3":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l3_t6_c3_colors4
+            topology_split: id
+            tube_count: 6
+            capacity: 3
+            color_count: 4
+            quota: 220
+            solution_len_range: [6, 10]
+            max_start_moves: 11
+            max_branch_avg_times_ten: 55
+            max_sorted_tubes: 1
+            min_state_distance: 4
+          - name: l3_t6_c4_colors4
+            topology_split: id
+            tube_count: 6
+            capacity: 4
+            color_count: 4
+            quota: 430
+            solution_len_range: [8, 12]
+            max_start_moves: 12
+            max_branch_avg_times_ten: 60
+            max_sorted_tubes: 1
+            min_state_distance: 4
+          - name: l3_t6_c4_colors5
+            topology_split: id
+            tube_count: 6
+            capacity: 4
+            color_count: 5
+            quota: 180
+            solution_len_range: [9, 13]
+            max_start_moves: 12
+            max_branch_avg_times_ten: 60
+            max_sorted_tubes: 1
+            min_state_distance: 5
+          - name: l3_t7_c4_colors5
+            topology_split: id
+            tube_count: 7
+            capacity: 4
+            color_count: 5
+            quota: 170
+            solution_len_range: [10, 15]
+            max_start_moves: 13
+            max_branch_avg_times_ten: 65
+            max_sorted_tubes: 1
+            min_state_distance: 5
+        eval_id_buckets:
+          - name: l3_eval_id_t6_c4_4
+            topology_split: id
+            tube_count: 6
+            capacity: 4
+            color_count: 4
+            quota: 2
+            solution_len_range: [8, 12]
+            max_start_moves: 12
+            max_branch_avg_times_ten: 60
+            max_sorted_tubes: 1
+            min_state_distance: 4
+          - name: l3_eval_id_t6_c4_5
+            topology_split: id
+            tube_count: 6
+            capacity: 4
+            color_count: 5
+            quota: 1
+            solution_len_range: [9, 13]
+            max_start_moves: 12
+            max_branch_avg_times_ten: 60
+            max_sorted_tubes: 1
+            min_state_distance: 5
+        eval_ood_buckets:
+          - name: l3_eval_ood_t7_c4_6
+            topology_split: ood
+            tube_count: 7
+            capacity: 4
+            color_count: 6
+            quota: 1
+            solution_len_range: [11, 15]
+            max_start_moves: 12
+            max_branch_avg_times_ten: 55
+            max_sorted_tubes: 1
+            min_state_distance: 5
+      "4":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l4_t6_c4_colors5
+            topology_split: id
+            tube_count: 6
+            capacity: 4
+            color_count: 5
+            quota: 150
+            solution_len_range: [11, 16]
+            max_start_moves: 12
+            max_branch_avg_times_ten: 60
+            max_sorted_tubes: 1
+            min_state_distance: 5
+          - name: l4_t7_c4_colors5
+            topology_split: id
+            tube_count: 7
+            capacity: 4
+            color_count: 5
+            quota: 180
+            solution_len_range: [12, 18]
+            max_start_moves: 13
+            max_branch_avg_times_ten: 65
+            max_sorted_tubes: 1
+            min_state_distance: 5
+          - name: l4_t8_c4_colors6
+            topology_split: id
+            tube_count: 8
+            capacity: 4
+            color_count: 6
+            quota: 210
+            solution_len_range: [14, 20]
+            max_start_moves: 14
+            max_branch_avg_times_ten: 70
+            max_sorted_tubes: 1
+            min_state_distance: 6
+          - name: l4_t9_c4_colors7
+            topology_split: id
+            tube_count: 9
+            capacity: 4
+            color_count: 7
+            quota: 220
+            solution_len_range: [15, 22]
+            max_start_moves: 15
+            max_branch_avg_times_ten: 70
+            max_sorted_tubes: 1
+            min_state_distance: 6
+          - name: l4_t10_c4_colors8
+            topology_split: id
+            tube_count: 10
+            capacity: 4
+            color_count: 8
+            quota: 240
+            solution_len_range: [16, 24]
+            max_start_moves: 16
+            max_branch_avg_times_ten: 75
+            max_sorted_tubes: 1
+            min_state_distance: 6
+        eval_id_buckets:
+          - name: l4_eval_id_t7
+            topology_split: id
+            tube_count: 7
+            capacity: 4
+            color_count: 5
+            quota: 1
+            solution_len_range: [12, 18]
+            max_start_moves: 13
+            max_branch_avg_times_ten: 65
+            max_sorted_tubes: 1
+            min_state_distance: 5
+          - name: l4_eval_id_t8
+            topology_split: id
+            tube_count: 8
+            capacity: 4
+            color_count: 6
+            quota: 1
+            solution_len_range: [14, 20]
+            max_start_moves: 14
+            max_branch_avg_times_ten: 70
+            max_sorted_tubes: 1
+            min_state_distance: 6
+          - name: l4_eval_id_t10
+            topology_split: id
+            tube_count: 10
+            capacity: 4
+            color_count: 8
+            quota: 1
+            solution_len_range: [16, 24]
+            max_start_moves: 16
+            max_branch_avg_times_ten: 75
+            max_sorted_tubes: 1
+            min_state_distance: 6
+        eval_ood_buckets:
+          - name: l4_eval_ood_t9_c4_8
+            topology_split: ood
+            tube_count: 9
+            capacity: 4
+            color_count: 8
+            quota: 1
+            solution_len_range: [17, 24]
+            max_start_moves: 14
+            max_branch_avg_times_ten: 60
+            max_sorted_tubes: 1
+            min_state_distance: 6
+  sliding_puzzle:
+    output_root: data
+    seed: 29
+    generation:
+      workers: 4
+    solver:
+      max_nodes_by_size:
+        3: 50000
+        4: 120000
+    render:
+      resolution: [208, 208]
+      fps: 10
+      duration_seconds:
+        min: 3
+        max: 7
+      base_frames_per_move: 4
+      min_frames_per_move: 2
+      max_frames_per_move: 6
+      start_hold_frames: 2
+      end_hold_frames: 4
+      style:
+        background: "#0e1118"
+        panel: "#25272b"
+        slot: "#43485c"
+        tile: "#30426d"
+        tile_border: "#b8d1ff"
+        text: "#f1f4fb"
+        text_stroke: "#1c2230"
+        outer_margin: 4
+        panel_padding: 4
+        panel_radius: 16
+        slot_gap: 3
+    levels:
+      "2":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l2_random_mid
+            topology_split: id
+            board_size: 3
+            family: random_walk
+            weight: 3
+            scramble_steps_range: [10, 22]
+            optimal_len_range: [6, 9]
+            min_manhattan_sum: 4
+            min_misplaced_tiles: 4
+            max_correct_tiles: 4
+            min_state_distance: 3
+          - name: l2_row_balanced
+            topology_split: id
+            board_size: 3
+            family: row_bias
+            weight: 4
+            scramble_steps_range: [14, 28]
+            optimal_len_range: [9, 11]
+            min_manhattan_sum: 6
+            min_misplaced_tiles: 5
+            max_correct_tiles: 3
+            min_state_distance: 3
+          - name: l2_col_balanced
+            topology_split: id
+            board_size: 3
+            family: column_bias
+            weight: 4
+            scramble_steps_range: [14, 28]
+            optimal_len_range: [9, 11]
+            min_manhattan_sum: 6
+            min_misplaced_tiles: 5
+            max_correct_tiles: 3
+            min_state_distance: 3
+          - name: l2_edge_long
+            topology_split: id
+            board_size: 3
+            family: edge_bias
+            weight: 3
+            scramble_steps_range: [18, 34]
+            optimal_len_range: [12, 14]
+            min_manhattan_sum: 8
+            min_misplaced_tiles: 6
+            max_correct_tiles: 2
+            min_state_distance: 4
+        eval_id_buckets:
+          - name: l2_eval_id_random
+            topology_split: id
+            board_size: 3
+            family: random_walk
+            weight: 2
+            scramble_steps_range: [10, 24]
+            optimal_len_range: [6, 9]
+            min_manhattan_sum: 4
+            min_misplaced_tiles: 4
+            max_correct_tiles: 4
+            min_state_distance: 3
+          - name: l2_eval_id_balanced
+            topology_split: id
+            board_size: 3
+            family: row_bias
+            weight: 3
+            scramble_steps_range: [14, 28]
+            optimal_len_range: [9, 11]
+            min_manhattan_sum: 6
+            min_misplaced_tiles: 5
+            max_correct_tiles: 3
+            min_state_distance: 3
+          - name: l2_eval_id_long
+            topology_split: id
+            board_size: 3
+            family: column_bias
+            weight: 2
+            scramble_steps_range: [18, 34]
+            optimal_len_range: [12, 14]
+            min_manhattan_sum: 8
+            min_misplaced_tiles: 6
+            max_correct_tiles: 2
+            min_state_distance: 4
+        eval_ood_buckets:
+          - name: l2_eval_ood_corner
+            topology_split: ood
+            board_size: 3
+            family: corner_bias
+            weight: 1
+            scramble_steps_range: [18, 34]
+            optimal_len_range: [12, 14]
+            min_manhattan_sum: 8
+            min_misplaced_tiles: 6
+            max_correct_tiles: 2
+            min_state_distance: 4
+          - name: l2_eval_ood_alt
+            topology_split: ood
+            board_size: 3
+            family: alternating
+            weight: 1
+            scramble_steps_range: [16, 32]
+            optimal_len_range: [10, 14]
+            min_manhattan_sum: 7
+            min_misplaced_tiles: 5
+            max_correct_tiles: 2
+            min_state_distance: 4
+      "3":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l3_random_hard
+            topology_split: id
+            board_size: 3
+            family: random_walk
+            weight: 3
+            scramble_steps_range: [24, 40]
+            optimal_len_range: [16, 18]
+            min_manhattan_sum: 10
+            min_misplaced_tiles: 7
+            max_correct_tiles: 1
+            min_state_distance: 4
+          - name: l3_row_hard
+            topology_split: id
+            board_size: 3
+            family: row_bias
+            weight: 4
+            scramble_steps_range: [28, 48]
+            optimal_len_range: [19, 21]
+            min_manhattan_sum: 12
+            min_misplaced_tiles: 7
+            max_correct_tiles: 1
+            min_state_distance: 4
+          - name: l3_col_hard
+            topology_split: id
+            board_size: 3
+            family: column_bias
+            weight: 4
+            scramble_steps_range: [28, 48]
+            optimal_len_range: [19, 21]
+            min_manhattan_sum: 12
+            min_misplaced_tiles: 7
+            max_correct_tiles: 1
+            min_state_distance: 4
+          - name: l3_edge_hard
+            topology_split: id
+            board_size: 3
+            family: edge_bias
+            weight: 3
+            scramble_steps_range: [32, 56]
+            optimal_len_range: [22, 24]
+            min_manhattan_sum: 14
+            min_misplaced_tiles: 8
+            max_correct_tiles: 0
+            min_state_distance: 5
+        eval_id_buckets:
+          - name: l3_eval_id_entry
+            topology_split: id
+            board_size: 3
+            family: random_walk
+            weight: 2
+            scramble_steps_range: [24, 42]
+            optimal_len_range: [16, 18]
+            min_manhattan_sum: 10
+            min_misplaced_tiles: 7
+            max_correct_tiles: 1
+            min_state_distance: 4
+          - name: l3_eval_id_core
+            topology_split: id
+            board_size: 3
+            family: row_bias
+            weight: 3
+            scramble_steps_range: [28, 48]
+            optimal_len_range: [19, 21]
+            min_manhattan_sum: 12
+            min_misplaced_tiles: 7
+            max_correct_tiles: 1
+            min_state_distance: 4
+          - name: l3_eval_id_cap
+            topology_split: id
+            board_size: 3
+            family: column_bias
+            weight: 2
+            scramble_steps_range: [32, 56]
+            optimal_len_range: [22, 24]
+            min_manhattan_sum: 14
+            min_misplaced_tiles: 8
+            max_correct_tiles: 0
+            min_state_distance: 5
+        eval_ood_buckets:
+          - name: l3_eval_ood_corner
+            topology_split: ood
+            board_size: 3
+            family: corner_bias
+            weight: 1
+            scramble_steps_range: [30, 56]
+            optimal_len_range: [20, 24]
+            min_manhattan_sum: 13
+            min_misplaced_tiles: 8
+            max_correct_tiles: 0
+            min_state_distance: 5
+          - name: l3_eval_ood_alt
+            topology_split: ood
+            board_size: 3
+            family: alternating
+            weight: 1
+            scramble_steps_range: [30, 56]
+            optimal_len_range: [20, 24]
+            min_manhattan_sum: 13
+            min_misplaced_tiles: 8
+            max_correct_tiles: 0
+            min_state_distance: 5
+      "4":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l4_random_entry
+            topology_split: id
+            board_size: 4
+            family: random_walk
+            weight: 3
+            scramble_steps_range: [18, 40]
+            optimal_len_range: [12, 15]
+            min_manhattan_sum: 12
+            min_misplaced_tiles: 8
+            max_correct_tiles: 6
+            min_state_distance: 4
+          - name: l4_row_core
+            topology_split: id
+            board_size: 4
+            family: row_bias
+            weight: 4
+            scramble_steps_range: [22, 48]
+            optimal_len_range: [16, 20]
+            min_manhattan_sum: 14
+            min_misplaced_tiles: 9
+            max_correct_tiles: 5
+            min_state_distance: 4
+          - name: l4_col_core
+            topology_split: id
+            board_size: 4
+            family: column_bias
+            weight: 4
+            scramble_steps_range: [22, 48]
+            optimal_len_range: [16, 20]
+            min_manhattan_sum: 14
+            min_misplaced_tiles: 9
+            max_correct_tiles: 5
+            min_state_distance: 4
+          - name: l4_edge_cap
+            topology_split: id
+            board_size: 4
+            family: edge_bias
+            weight: 3
+            scramble_steps_range: [28, 60]
+            optimal_len_range: [21, 24]
+            min_manhattan_sum: 16
+            min_misplaced_tiles: 10
+            max_correct_tiles: 4
+            min_state_distance: 5
+        eval_id_buckets:
+          - name: l4_eval_id_entry
+            topology_split: id
+            board_size: 4
+            family: random_walk
+            weight: 2
+            scramble_steps_range: [18, 42]
+            optimal_len_range: [12, 16]
+            min_manhattan_sum: 12
+            min_misplaced_tiles: 8
+            max_correct_tiles: 6
+            min_state_distance: 4
+          - name: l4_eval_id_core
+            topology_split: id
+            board_size: 4
+            family: row_bias
+            weight: 3
+            scramble_steps_range: [24, 48]
+            optimal_len_range: [17, 20]
+            min_manhattan_sum: 14
+            min_misplaced_tiles: 9
+            max_correct_tiles: 5
+            min_state_distance: 4
+          - name: l4_eval_id_cap
+            topology_split: id
+            board_size: 4
+            family: column_bias
+            weight: 2
+            scramble_steps_range: [28, 60]
+            optimal_len_range: [21, 24]
+            min_manhattan_sum: 16
+            min_misplaced_tiles: 10
+            max_correct_tiles: 4
+            min_state_distance: 5
+        eval_ood_buckets:
+          - name: l4_eval_ood_corner
+            topology_split: ood
+            board_size: 4
+            family: corner_bias
+            weight: 1
+            scramble_steps_range: [26, 60]
+            optimal_len_range: [18, 24]
+            min_manhattan_sum: 15
+            min_misplaced_tiles: 10
+            max_correct_tiles: 4
+            min_state_distance: 5
+          - name: l4_eval_ood_alt
+            topology_split: ood
+            board_size: 4
+            family: alternating
+            weight: 1
+            scramble_steps_range: [26, 60]
+            optimal_len_range: [18, 24]
+            min_manhattan_sum: 15
+            min_misplaced_tiles: 10
+            max_correct_tiles: 4
+            min_state_distance: 5
+  sokoban:
+    output_root: data
+    seed: 31
+    generation:
+      workers: 1
+      board_size: 8
+    render:
+      resolution: [208, 208]
+      fps: 10
+      duration_seconds:
+        min: 3
+        max: 7
+      start_hold_frames: 3
+      end_hold_frames: 5
+      base_frames_per_action: 3
+      min_frames_per_action: 2
+      max_frames_per_action: 5
+      style:
+        background: "#202226"
+        panel: "#10131a"
+        panel_radius: 16
+        panel_margin: 6
+        board_padding: 18
+        cell_gap: 2
+        floor: "#12161c"
+        floor_grid: "#3e434d"
+        wall_fill: "#7c86a4"
+        wall_inner: "#c7c6bf"
+        target: "#82e17f"
+        solved: "#62db8f"
+        player: "#ff5c7a"
+        box: "#f4b74e"
+    levels:
+      "2":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l2_core
+            topology_split: id
+            weight: 4
+            grammar_mode: core
+            action_range: [6, 12]
+            min_pushes: 1
+            floor_range: [22, 30]
+            op_count_range: [2, 3]
+            allowed_ops: ["spine_v", "spine_h", "corner", "notch"]
+            required_ops: ["corner"]
+            min_state_distance: 4
+            max_retries: 420
+          - name: l2_lane
+            topology_split: id
+            weight: 3
+            grammar_mode: core
+            action_range: [6, 12]
+            min_pushes: 2
+            floor_range: [21, 29]
+            op_count_range: [2, 4]
+            allowed_ops: ["spine_v", "spine_h", "corner", "notch", "funnel"]
+            required_ops: ["spine_v"]
+            min_state_distance: 4
+            max_retries: 420
+          - name: l2_bend
+            topology_split: id
+            weight: 3
+            grammar_mode: core
+            action_range: [6, 12]
+            min_pushes: 2
+            floor_range: [20, 28]
+            op_count_range: [3, 4]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "notch"]
+            required_ops: ["corner", "funnel"]
+            min_state_distance: 4
+            max_retries: 440
+        eval_id_buckets:
+          - name: l2_eval_id_core
+            topology_split: id
+            weight: 2
+            grammar_mode: core
+            action_range: [6, 12]
+            min_pushes: 1
+            floor_range: [22, 30]
+            op_count_range: [2, 3]
+            allowed_ops: ["spine_v", "spine_h", "corner", "notch"]
+            required_ops: ["corner"]
+            min_state_distance: 4
+            max_retries: 320
+          - name: l2_eval_id_bend
+            topology_split: id
+            weight: 2
+            grammar_mode: core
+            action_range: [6, 12]
+            min_pushes: 2
+            floor_range: [20, 28]
+            op_count_range: [3, 4]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "notch"]
+            required_ops: ["corner", "funnel"]
+            min_state_distance: 4
+            max_retries: 340
+        eval_ood_buckets:
+          - name: l2_eval_ood_pocket
+            topology_split: ood
+            weight: 1
+            grammar_mode: ood
+            action_range: [7, 12]
+            min_pushes: 2
+            floor_range: [20, 28]
+            op_count_range: [3, 4]
+            allowed_ops: ["spine_v", "spine_h", "pocket", "corner", "notch"]
+            required_ops: ["pocket"]
+            min_state_distance: 4
+            max_retries: 360
+          - name: l2_eval_ood_split
+            topology_split: ood
+            weight: 1
+            grammar_mode: ood
+            action_range: [8, 12]
+            min_pushes: 2
+            floor_range: [18, 26]
+            op_count_range: [3, 4]
+            allowed_ops: ["split", "corner", "notch", "funnel"]
+            required_ops: ["split"]
+            min_state_distance: 4
+            max_retries: 380
+      "3":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l3_route
+            topology_split: id
+            weight: 3
+            grammar_mode: advanced
+            action_range: [13, 22]
+            min_pushes: 3
+            floor_range: [19, 27]
+            op_count_range: [3, 4]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "notch"]
+            required_ops: ["spine_v", "funnel"]
+            min_state_distance: 5
+            max_retries: 520
+          - name: l3_alcove
+            topology_split: id
+            weight: 3
+            grammar_mode: advanced
+            action_range: [13, 22]
+            min_pushes: 3
+            floor_range: [18, 26]
+            op_count_range: [4, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "pocket", "notch"]
+            required_ops: ["corner", "pocket"]
+            min_state_distance: 5
+            max_retries: 540
+          - name: l3_tight
+            topology_split: id
+            weight: 4
+            grammar_mode: advanced
+            action_range: [13, 22]
+            min_pushes: 3
+            floor_range: [18, 26]
+            op_count_range: [3, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "notch", "split"]
+            required_ops: ["spine_h", "funnel"]
+            min_state_distance: 5
+            max_retries: 560
+        eval_id_buckets:
+          - name: l3_eval_id_route
+            topology_split: id
+            weight: 2
+            grammar_mode: advanced
+            action_range: [13, 22]
+            min_pushes: 3
+            floor_range: [19, 27]
+            op_count_range: [3, 4]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "notch"]
+            required_ops: ["spine_v", "funnel"]
+            min_state_distance: 5
+            max_retries: 420
+          - name: l3_eval_id_tight
+            topology_split: id
+            weight: 3
+            grammar_mode: advanced
+            action_range: [13, 22]
+            min_pushes: 3
+            floor_range: [18, 26]
+            op_count_range: [3, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "notch", "split"]
+            required_ops: ["spine_h", "funnel"]
+            min_state_distance: 5
+            max_retries: 460
+        eval_ood_buckets:
+          - name: l3_eval_ood_pocket
+            topology_split: ood
+            weight: 1
+            grammar_mode: ood
+            action_range: [14, 22]
+            min_pushes: 4
+            floor_range: [17, 24]
+            op_count_range: [4, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "pocket", "funnel", "notch"]
+            required_ops: ["pocket", "funnel"]
+            min_state_distance: 5
+            max_retries: 480
+          - name: l3_eval_ood_split
+            topology_split: ood
+            weight: 1
+            grammar_mode: ood
+            action_range: [15, 22]
+            min_pushes: 3
+            floor_range: [17, 25]
+            op_count_range: [3, 5]
+            allowed_ops: ["split", "corner", "pocket", "funnel", "notch"]
+            required_ops: ["split", "pocket"]
+            min_state_distance: 5
+            max_retries: 520
+      "4":
+        counts:
+          train: 1000
+          eval: 50
+        eval_ood_ratio: 0.4
+        train_buckets:
+          - name: l4_route
+            topology_split: id
+            weight: 3
+            grammar_mode: expert
+            action_range: [23, 36]
+            min_pushes: 4
+            floor_range: [16, 24]
+            op_count_range: [4, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "pocket", "notch"]
+            required_ops: ["spine_v", "corner", "funnel"]
+            min_state_distance: 6
+            max_retries: 700
+          - name: l4_funnels
+            topology_split: id
+            weight: 4
+            grammar_mode: expert
+            action_range: [22, 34]
+            min_pushes: 3
+            floor_range: [16, 25]
+            op_count_range: [4, 6]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "pocket", "notch", "split"]
+            required_ops: ["funnel", "pocket"]
+            min_state_distance: 6
+            max_retries: 1000
+          - name: l4_tight
+            topology_split: id
+            weight: 3
+            grammar_mode: expert
+            action_range: [22, 34]
+            min_pushes: 4
+            floor_range: [16, 24]
+            op_count_range: [4, 6]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "pocket", "split", "notch"]
+            required_ops: ["split", "funnel"]
+            min_state_distance: 6
+            max_retries: 1000
+        eval_id_buckets:
+          - name: l4_eval_id_route
+            topology_split: id
+            weight: 2
+            grammar_mode: expert
+            action_range: [22, 34]
+            min_pushes: 4
+            floor_range: [16, 25]
+            op_count_range: [4, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "pocket", "notch"]
+            required_ops: ["spine_v", "corner", "funnel"]
+            min_state_distance: 6
+            max_retries: 760
+          - name: l4_eval_id_tight
+            topology_split: id
+            weight: 3
+            grammar_mode: expert
+            action_range: [22, 34]
+            min_pushes: 3
+            floor_range: [16, 25]
+            op_count_range: [4, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "funnel", "pocket", "split", "notch"]
+            required_ops: ["split", "funnel"]
+            min_state_distance: 6
+            max_retries: 900
+        eval_ood_buckets:
+          - name: l4_eval_ood_split
+            topology_split: ood
+            weight: 1
+            grammar_mode: ood
+            action_range: [22, 34]
+            min_pushes: 3
+            floor_range: [16, 25]
+            op_count_range: [4, 5]
+            allowed_ops: ["split", "corner", "pocket", "funnel", "notch"]
+            required_ops: ["split", "pocket", "funnel"]
+            min_state_distance: 6
+            max_retries: 900
+          - name: l4_eval_ood_dense
+            topology_split: ood
+            weight: 1
+            grammar_mode: ood
+            action_range: [23, 35]
+            min_pushes: 3
+            floor_range: [15, 24]
+            op_count_range: [4, 5]
+            allowed_ops: ["spine_v", "spine_h", "corner", "pocket", "funnel", "split", "notch"]
+            required_ops: ["pocket", "split"]
+            min_state_distance: 6
+            max_retries: 920
