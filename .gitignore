@@ -13,6 +13,7 @@ train/
 test/
 test_hard/
 data/
+dataset/
 synthetic_oneline_interwoven_100k/
 sample_oneline_hanzi*/
 sim_draw_dataset/
@@ -37,12 +38,13 @@ real_like_push_sample/
 
 # Local/runtime
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .DS_Store
 MUJOCO_LOG.TXT
 .libero_local/
+*.egg-info/
 *.log
 *.pid
